@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07111c">
+<title>João Pizzio site — Jogos grátis para Android</title>
+<style>
+:root{--bg:#050b12;--panel:#0b1724;--panel2:#101f2f;--blue:#1597ff;--text:#f4f8ff;--muted:#a9bbcf;--line:#1b3043}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at top,#0b1b2b 0,#050b12 50%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{position:sticky;top:0;z-index:5;background:#07111cf2;border-bottom:1px solid var(--line);backdrop-filter:blur(14px)}
+.nav{max-width:1400px;margin:auto;padding:14px 24px;display:flex;align-items:center;gap:25px}.logo{font-weight:900;font-size:clamp(22px,3vw,34px);letter-spacing:-1px;white-space:nowrap}.logo span{color:var(--blue)}.logo:before{content:"🎮";margin-right:10px}.navlinks{display:flex;gap:8px}.navlinks a{color:#c4d3e2;text-decoration:none;padding:12px 15px;border-radius:12px}.navlinks a:hover,.navlinks a.active{background:#10283d;color:#fff}.search{margin-left:auto;min-width:170px;width:min(290px,30vw);background:#101f2f;border:1px solid #20364b;color:white;padding:12px 15px;border-radius:25px;font-size:14px;outline:none}.search:focus{border-color:var(--blue)}
+main{max-width:1400px;margin:auto;padding:22px 24px 35px}.hero{min-height:265px;border:1px solid #18364d;border-radius:20px;overflow:hidden;display:flex;align-items:center;padding:35px clamp(22px,4vw,58px);background:linear-gradient(90deg,#061321 0%,#07182adf 47%,#07182766 100%),radial-gradient(circle at 80% 20%,#17517a 0,#0c2b43 26%,#07111c 65%);position:relative}.hero:after{content:"";position:absolute;right:6%;top:12%;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,#237db1 0,#0c3552 36%,transparent 70%);opacity:.5}.hero-copy{position:relative;z-index:1;max-width:690px}.hero h1{font-size:clamp(30px,4vw,50px);line-height:1.08;margin:0 0 15px;letter-spacing:-1.5px}.hero h1 span{color:var(--blue)}.hero p{color:#c2d3e5;line-height:1.6;font-size:17px;max-width:600px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--blue);border:0;color:#fff;padding:12px 18px;border-radius:12px;font-weight:750;text-decoration:none;cursor:pointer}.btn:hover{filter:brightness(1.12);transform:translateY(-1px)}.features{display:flex;gap:14px;flex-wrap:wrap;margin-top:22px;color:#c2d3e5;font-size:13px}.features span{background:#0b1b2acc;border:1px solid #1a3a52;border-radius:10px;padding:9px 12px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;margin:30px 0 17px}.section-head h2{font-size:25px;margin:0;letter-spacing:-.5px}.filters{display:flex;gap:8px;flex-wrap:wrap}.filter{background:#0d1a28;color:#c6d6e7;border:1px solid #1c3043;border-radius:24px;padding:9px 14px;cursor:pointer}.filter.active,.filter:hover{background:var(--blue);border-color:var(--blue);color:white}
+.grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:18px}.game{min-width:0}.cover{aspect-ratio:1.42/1;border-radius:12px;border:1px solid #1b3448;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;overflow:hidden;position:relative;background:linear-gradient(135deg,var(--c1),var(--c2));box-shadow:0 8px 20px #0003}.cover:before{content:"";position:absolute;width:160px;height:160px;border-radius:50%;background:#ffffff12;right:-55px;top:-55px}.cover .emoji{font-size:42px;display:block;margin-bottom:8px;filter:drop-shadow(0 3px 5px #0005)}.cover strong{position:relative;font-size:clamp(12px,1.2vw,16px);text-shadow:0 2px 5px #0008}.game h3{font-size:15px;margin:10px 2px 4px;line-height:1.25}.game p{font-size:12px;color:var(--muted);margin:0 2px 10px}.game-actions{display:flex;gap:8px;align-items:center}.play{font-size:12px;padding:8px 13px;border-radius:22px}.fav{background:#102033;border:1px solid #243d52;color:#c6d6e7;border-radius:50%;width:32px;height:32px;cursor:pointer}.fav.on{color:#ffd66e;border-color:#806b2c}.empty{grid-column:1/-1;color:var(--muted);padding:30px;text-align:center;border:1px dashed #294257;border-radius:14px}
+footer{border-top:1px solid var(--line);padding:22px 24px;color:#94a9bf;text-align:center;font-size:13px}.footer-logo{font-weight:850;color:#fff;font-size:18px;margin-bottom:8px}.footer-logo span{color:var(--blue)}
+.modalback{display:none;position:fixed;inset:0;z-index:10;background:#000a;align-items:center;justify-content:center;padding:18px}.modalback.open{display:flex}.modal{background:#0c1926;border:1px solid #274258;border-radius:18px;padding:24px;width:min(500px,100%)}.modal h2{margin-top:0}.modal label{display:block;font-size:13px;color:#bfd0e0;margin:13px 0 6px}.modal input,.modal select{width:100%;background:#07111c;color:white;border:1px solid #2a4358;padding:12px;border-radius:9px}.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}.secondary{background:#1b2a39;color:#e5edf6;border:1px solid #30475c;border-radius:10px;padding:11px 15px;cursor:pointer}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.nav{gap:12px}.navlinks a{padding:10px}.hero:after{right:-2%}}
+@media(max-width:650px){.nav{padding:12px 14px;flex-wrap:wrap;gap:10px}.navlinks{order:3;width:100%;justify-content:space-between}.navlinks a{padding:8px;font-size:13px}.search{width:100%;order:2;margin:0}.hero{padding:25px 20px;min-height:260px}.hero p{font-size:15px}.features{gap:7px}.features span{font-size:11px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}main{padding:15px}.section-head h2{font-size:22px}.cover .emoji{font-size:34px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <div class="logo">João Pizzio <span>site</span></div>
+    <nav class="navlinks" aria-label="Navegação">
+      <a href="#inicio" class="active">⌂ Início</a><a href="#jogos">🎮 Jogos</a><a href="#favoritos" id="favoritesNav">★ Favoritos</a><a href="#sobre">ⓘ Sobre</a>
+    </nav>
+    <input id="search" class="search" type="search" placeholder="⌕  Buscar jogos..." aria-label="Buscar jogos">
+  </div>
+</header>
+<main id="inicio">
+  <section class="hero">
+    <div class="hero-copy">
+      <h1>Bem-vindo ao <span>João Pizzio site!</span></h1>
+      <p>Jogos totalmente gratuitos para Android.</p>
+      <a class="btn" href="#jogos">🎮 &nbsp; Ver todos os jogos</a>
+      <div class="features"><span>⚡ Links rápidos</span><span>📱 Feito para celular e PC</span><span>⭐ Seus favoritos em um só lugar</span></div>
+    </div>
+  </section>
+
+  <div class="section-head" id="jogos">
+    <h2>🎮 Jogos em destaque</h2>
+    <div class="filters" id="filters">
+      <button class="filter active" data-cat="Todos">Todos</button>
+      <button class="filter" data-cat="Ação">Ação</button><button class="filter" data-cat="Aventura">Aventura</button>
+      <button class="filter" data-cat="Esportes">Esportes</button><button class="filter" data-cat="Corrida">Corrida</button>
+      <button class="filter" data-cat="RPG">RPG</button><button class="filter" data-cat="Puzzle">Puzzle</button>
+    </div>
+  </div>
+  <section class="grid" id="gameGrid" aria-live="polite"></section>
+  <div class="section-head" id="favoritos"><h2>★ Seus favoritos</h2><button class="filter" id="addGame">＋ Adicionar jogo</button></div>
+  <section class="grid" id="favoriteGrid"></section>
+</main>
+<footer id="sobre"><div class="footer-logo">🎮 João Pizzio <span>site</span></div>Um cantinho para descobrir jogos. <br><br>Importante: os links e jogos são fornecidos por seus respectivos sites; confira se a fonte é confiável antes de baixar.</footer>
+
+<div class="modalback" id="modalBack">
+  <form class="modal" id="gameForm">
+    <h2>Adicionar um jogo</h2>
+    <p style="color:#a9bbcf;font-size:14px">Coloque o nome e o link do jogo. Ele será salvo neste navegador.</p>
+    <label for="gameName">Nome do jogo</label><input id="gameName" required maxlength="70" placeholder="Ex.: Meu jogo">
+    <label for="gameUrl">Link do jogo</label><input id="gameUrl" type="url" required placeholder="https://exemplo.com">
+    <label for="gameCat">Categoria</label><select id="gameCat"><option>Ação</option><option>Aventura</option><option>Esportes</option><option>Corrida</option><option>RPG</option><option>Puzzle</option><option>Outros</option></select>
+    <div class="modal-actions"><button type="button" class="secondary" id="cancelModal">Cancelar</button><button class="btn" type="submit">Salvar jogo</button></div>
+  </form>
+</div>
+<script>
+const defaults=[
+ {name:"GTA San Andreas",cat:"Ação",emoji:"🚘",colors:["#7a512c","#c49a52"],url:"",desc:"Ação / Mundo aberto"},
+ {name:"Minecraft",cat:"Aventura",emoji:"🟩",colors:["#236c4a","#438fc0"],url:"",desc:"Sandbox / Sobrevivência"},
+ {name:"Terraria",cat:"Aventura",emoji:"🌳",colors:["#197d85","#4b9d53"],url:"",desc:"Aventura / Sobrevivência"},
+ {name:"Need for Speed",cat:"Corrida",emoji:"🏎️",colors:["#1d2632","#9e392b"],url:"",desc:"Corrida"},
+ {name:"Bully",cat:"Ação",emoji:"🎒",colors:["#1d4c77","#b67a35"],url:"",desc:"Aventura / Ação"},
+ {name:"NBA 2K14",cat:"Esportes",emoji:"🏀",colors:["#7e2026","#d75a32"],url:"",desc:"Basquete"},
+ {name:"Stardew Valley",cat:"RPG",emoji:"🌻",colors:["#286a45","#d2a345"],url:"",desc:"RPG / Simulação"},
+ {name:"Celeste",cat:"Aventura",emoji:"🏔️",colors:["#343c83","#b65b9a"],url:"",desc:"Plataforma / Aventura"},
+ {name:"Hollow Knight",cat:"Aventura",emoji:"🗡️",colors:["#101f42","#316a92"],url:"",desc:"Aventura / Metroidvania"},
+ {name:"Street Fighter IV",cat:"Ação",emoji:"🥊",colors:["#8e3b2a","#d79a45"],url:"",desc:"Luta"}
+];
+let custom=[];try{custom=JSON.parse(localStorage.getItem("gamehub_custom")||"[]")}catch(e){}
+let favorites=[];try{favorites=JSON.parse(localStorage.getItem("gamehub_favs")||"[]")}catch(e){}
+let activeCat="Todos",searchText="",showFavorites=false;
+const all=()=>[...defaults,...custom];
+function safeUrl(url){try{const u=new URL(url);return ["http:","https:"].includes(u.protocol)?u.href:""}catch(e){return ""}}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function card(g,i){const id=g.id||g.name;const isFav=favorites.includes(id);const colors=g.colors||["#17415b","#276a8b"];const url=safeUrl(g.url||"");return `<article class="game"><div class="cover" style="--c1:${colors[0]};--c2:${colors[1]}"><div><span class="emoji">${g.emoji||"🎮"}</span><strong>${escapeHtml(g.name)}</strong></div></div><h3>${escapeHtml(g.name)}</h3><p>${escapeHtml(g.desc||g.cat||"Jogo")}</p><div class="game-actions">${url?`<a class="btn play" href="${url}" target="_blank" rel="noopener noreferrer">▶ Jogar</a>`:`<button class="btn play" onclick="alert('Este jogo ainda não tem link cadastrado. Toque em “Adicionar jogo” para incluir um link.')">▶ Jogar</button>`}<button class="fav ${isFav?'on':''}" title="Favoritar" aria-label="Favoritar ${escapeHtml(g.name)}" onclick="toggleFav('${String(id).replace(/\\/g,"\\\\").replace(/'/g,"\\'")}')">${isFav?"★":"☆"}</button></div></article>`}
+function render(){const matching=all().filter(g=>(activeCat==="Todos"||g.cat===activeCat)&&(g.name.toLowerCase().includes(searchText)||String(g.desc||"").toLowerCase().includes(searchText)));document.getElementById("gameGrid").innerHTML=matching.length?matching.map(card).join(""):'<div class="empty">Nenhum jogo encontrado. Tente outro nome ou categoria.</div>';const favs=all().filter(g=>favorites.includes(g.id||g.name)&&(g.name.toLowerCase().includes(searchText)));document.getElementById("favoriteGrid").innerHTML=favs.length?favs.map(card).join(""):'<div class="empty">Ainda não há favoritos. Toque na estrela de um jogo para guardá-lo aqui.</div>'}
+function toggleFav(id){favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id];localStorage.setItem("gamehub_favs",JSON.stringify(favorites));render()}
+document.getElementById("search").addEventListener("input",e=>{searchText=e.target.value.toLowerCase().trim();render()});
+document.getElementById("filters").addEventListener("click",e=>{const b=e.target.closest("button[data-cat]");if(!b)return;activeCat=b.dataset.cat;document.querySelectorAll(".filter[data-cat]").forEach(x=>x.classList.toggle("active",x===b));render()});
+document.getElementById("favoritesNav").addEventListener("click",()=>{document.getElementById("favoritos").scrollIntoView({behavior:"smooth"})});
+const modal=document.getElementById("modalBack");document.getElementById("addGame").onclick=()=>modal.classList.add("open");document.getElementById("cancelModal").onclick=()=>modal.classList.remove("open");
+document.getElementById("gameForm").addEventListener("submit",e=>{e.preventDefault();const name=document.getElementById("gameName").value.trim(),url=safeUrl(document.getElementById("gameUrl").value.trim()),cat=document.getElementById("gameCat").value;if(!url){alert("Use um link válido começando com https:// ou http://");return}custom.push({id:"custom-"+Date.now(),name,url,cat,emoji:"🎮",colors:["#12476a","#187fbd"],desc:cat});localStorage.setItem("gamehub_custom",JSON.stringify(custom));modal.classList.remove("open");e.target.reset();activeCat="Todos";document.querySelectorAll(".filter[data-cat]").forEach(x=>x.classList.toggle("active",x.dataset.cat==="Todos"));render()});
+render();
+</script>
+</body>
+</html>
