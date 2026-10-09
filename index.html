@@ -94,4 +94,19 @@ document.getElementById("gameForm").addEventListener("submit",e=>{e.preventDefau
 render();
 </script>
 </body>
+    </html>s",searchText="",showFavorites=false;
+const all=()=>[...defaults,...custom];
+function safeUrl(url){try{const u=new URL(url);return ["http:","https:"].includes(u.protocol)?u.href:""}catch(e){return ""}}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function card(g,i){const id=g.id||g.name;const isFav=favorites.includes(id);const colors=g.colors||["#17415b","#276a8b"];const url=safeUrl(g.url||"");return `<article class="game"><div class="cover" style="--c1:${colors[0]};--c2:${colors[1]}"><div><span class="emoji">${g.emoji||"🎮"}</span><strong>${escapeHtml(g.name)}</strong></div></div><h3>${escapeHtml(g.name)}</h3><p>${escapeHtml(g.desc||g.cat||"Jogo")}</p><div class="game-actions">${url?`<a class="btn play" href="${url}" target="_blank" rel="noopener noreferrer">▶ Jogar</a>`:`<button class="btn play" onclick="alert('Este jogo ainda não tem link cadastrado. Toque em “Adicionar jogo” para incluir um link.')">▶ Jogar</button>`}<button class="fav ${isFav?'on':''}" title="Favoritar" aria-label="Favoritar ${escapeHtml(g.name)}" onclick="toggleFav('${String(id).replace(/\\/g,"\\\\").replace(/'/g,"\\'")}')">${isFav?"★":"☆"}</button></div></article>`}
+function render(){const matching=all().filter(g=>(activeCat==="Todos"||g.cat===activeCat)&&(g.name.toLowerCase().includes(searchText)||String(g.desc||"").toLowerCase().includes(searchText)));document.getElementById("gameGrid").innerHTML=matching.length?matching.map(card).join(""):'<div class="empty">Nenhum jogo encontrado. Tente outro nome ou categoria.</div>';const favs=all().filter(g=>favorites.includes(g.id||g.name)&&(g.name.toLowerCase().includes(searchText)));document.getElementById("favoriteGrid").innerHTML=favs.length?favs.map(card).join(""):'<div class="empty">Ainda não há favoritos. Toque na estrela de um jogo para guardá-lo aqui.</div>'}
+function toggleFav(id){favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id];localStorage.setItem("gamehub_favs",JSON.stringify(favorites));render()}
+document.getElementById("search").addEventListener("input",e=>{searchText=e.target.value.toLowerCase().trim();render()});
+document.getElementById("filters").addEventListener("click",e=>{const b=e.target.closest("button[data-cat]");if(!b)return;activeCat=b.dataset.cat;document.querySelectorAll(".filter[data-cat]").forEach(x=>x.classList.toggle("active",x===b));render()});
+document.getElementById("favoritesNav").addEventListener("click",()=>{document.getElementById("favoritos").scrollIntoView({behavior:"smooth"})});
+const modal=document.getElementById("modalBack");document.getElementById("addGame").onclick=()=>modal.classList.add("open");document.getElementById("cancelModal").onclick=()=>modal.classList.remove("open");
+document.getElementById("gameForm").addEventListener("submit",e=>{e.preventDefault();const name=document.getElementById("gameName").value.trim(),url=safeUrl(document.getElementById("gameUrl").value.trim()),cat=document.getElementById("gameCat").value;if(!url){alert("Use um link válido começando com https:// ou http://");return}custom.push({id:"custom-"+Date.now(),name,url,cat,emoji:"🎮",colors:["#12476a","#187fbd"],desc:cat});localStorage.setItem("gamehub_custom",JSON.stringify(custom));modal.classList.remove("open");e.target.reset();activeCat="Todos";document.querySelectorAll(".filter[data-cat]").forEach(x=>x.classList.toggle("active",x.dataset.cat==="Todos"));render()});
+render();
+</script>
+</body>
 </html>
