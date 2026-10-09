@@ -17,6 +17,39 @@ footer{border-top:1px solid var(--line);padding:22px 24px;color:#94a9bf;text-ali
 .modalback{display:none;position:fixed;inset:0;z-index:10;background:#000a;align-items:center;justify-content:center;padding:18px}.modalback.open{display:flex}.modal{background:#0c1926;border:1px solid #274258;border-radius:18px;padding:24px;width:min(500px,100%)}.modal h2{margin-top:0}.modal label{display:block;font-size:13px;color:#bfd0e0;margin:13px 0 6px}.modal input,.modal select{width:100%;background:#07111c;color:white;border:1px solid #2a4358;padding:12px;border-radius:9px}.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}.secondary{background:#1b2a39;color:#e5edf6;border:1px solid #30475c;border-radius:10px;padding:11px 15px;cursor:pointer}
 @media(max-width:1050px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.nav{gap:12px}.navlinks a{padding:10px}.hero:after{right:-2%}}
 @media(max-width:650px){.nav{padding:12px 14px;flex-wrap:wrap;gap:10px}.navlinks{order:3;width:100%;justify-content:space-between}.navlinks a{padding:8px;font-size:13px}.search{width:100%;order:2;margin:0}.hero{padding:25px 20px;min-height:260px}.hero p{font-size:15px}.features{gap:7px}.features span{font-size:11px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}main{padding:15px}.section-head h2{font-size:22px}.cover .emoji{font-size:34px}}
+
+/* Tema branco e preto */
+:root{--bg:#ffffff;--panel:#ffffff;--panel2:#f4f4f4;--blue:#111111;--text:#111111;--muted:#555555;--line:#dddddd}
+body{background:#ffffff;color:#111111}
+header{background:rgba(255,255,255,.96);border-bottom:1px solid #dddddd}
+.logo span,.hero h1 span,.footer-logo span{color:#111111}
+.navlinks a{color:#333333}
+.navlinks a:hover,.navlinks a.active{background:#eeeeee;color:#111111}
+.search{background:#f7f7f7;border:1px solid #d5d5d5;color:#111111}
+.search:focus{border-color:#111111}
+.hero{border:1px solid #dddddd;background:linear-gradient(120deg,#ffffff 0%,#f1f1f1 100%)}
+.hero:after{background:radial-gradient(circle,#e5e5e5 0,#f5f5f5 45%,transparent 72%)}
+.hero p,.features{color:#444444}
+.btn{background:#111111;color:#ffffff}
+.features span{background:#f5f5f5;border:1px solid #dddddd;color:#333333}
+.filter{background:#f5f5f5;color:#222222;border:1px solid #dddddd}
+.filter.active,.filter:hover{background:#111111;border-color:#111111;color:#ffffff}
+.cover{border:1px solid #dddddd;background:linear-gradient(135deg,#f0f0f0,#cfcfcf);box-shadow:0 5px 14px #00000012;color:#111111}
+.cover:before{background:#ffffff66}
+.cover .emoji{filter:none}
+.cover strong{text-shadow:none}
+.game p{color:#555555}
+.fav{background:#f4f4f4;border:1px solid #d5d5d5;color:#222222}
+.fav.on{color:#111111;border-color:#111111}
+.empty{color:#555555;border-color:#cccccc}
+footer{border-top:1px solid #dddddd;color:#555555}
+.footer-logo{color:#111111}
+.modalback{background:#0008}
+.modal{background:#ffffff;border:1px solid #dddddd;color:#111111}
+.modal label{color:#333333}
+.modal input,.modal select{background:#fafafa;color:#111111;border:1px solid #cccccc}
+.secondary{background:#f1f1f1;color:#111111;border:1px solid #cccccc}
+
 </style>
 </head>
 <body>
@@ -80,6 +113,21 @@ const defaults=[
 let custom=[];try{custom=JSON.parse(localStorage.getItem("gamehub_custom")||"[]")}catch(e){}
 let favorites=[];try{favorites=JSON.parse(localStorage.getItem("gamehub_favs")||"[]")}catch(e){}
 let activeCat="Todos",searchText="",showFavorites=false;
+const all=()=>[...defaults,...custom];
+function safeUrl(url){try{const u=new URL(url);return ["http:","https:"].includes(u.protocol)?u.href:""}catch(e){return ""}}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function card(g,i){const id=g.id||g.name;const isFav=favorites.includes(id);const colors=g.colors||["#17415b","#276a8b"];const url=safeUrl(g.url||"");return `<article class="game"><div class="cover" style="--c1:${colors[0]};--c2:${colors[1]}"><div><span class="emoji">${g.emoji||"🎮"}</span><strong>${escapeHtml(g.name)}</strong></div></div><h3>${escapeHtml(g.name)}</h3><p>${escapeHtml(g.desc||g.cat||"Jogo")}</p><div class="game-actions">${url?`<a class="btn play" href="${url}" target="_blank" rel="noopener noreferrer">▶ Jogar</a>`:`<button class="btn play" onclick="alert('Este jogo ainda não tem link cadastrado. Toque em “Adicionar jogo” para incluir um link.')">▶ Jogar</button>`}<button class="fav ${isFav?'on':''}" title="Favoritar" aria-label="Favoritar ${escapeHtml(g.name)}" onclick="toggleFav('${String(id).replace(/\\/g,"\\\\").replace(/'/g,"\\'")}')">${isFav?"★":"☆"}</button></div></article>`}
+function render(){const matching=all().filter(g=>(activeCat==="Todos"||g.cat===activeCat)&&(g.name.toLowerCase().includes(searchText)||String(g.desc||"").toLowerCase().includes(searchText)));document.getElementById("gameGrid").innerHTML=matching.length?matching.map(card).join(""):'<div class="empty">Nenhum jogo encontrado. Tente outro nome ou categoria.</div>';const favs=all().filter(g=>favorites.includes(g.id||g.name)&&(g.name.toLowerCase().includes(searchText)));document.getElementById("favoriteGrid").innerHTML=favs.length?favs.map(card).join(""):'<div class="empty">Ainda não há favoritos. Toque na estrela de um jogo para guardá-lo aqui.</div>'}
+function toggleFav(id){favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id];localStorage.setItem("gamehub_favs",JSON.stringify(favorites));render()}
+document.getElementById("search").addEventListener("input",e=>{searchText=e.target.value.toLowerCase().trim();render()});
+document.getElementById("filters").addEventListener("click",e=>{const b=e.target.closest("button[data-cat]");if(!b)return;activeCat=b.dataset.cat;document.querySelectorAll(".filter[data-cat]").forEach(x=>x.classList.toggle("active",x===b));render()});
+document.getElementById("favoritesNav").addEventListener("click",()=>{document.getElementById("favoritos").scrollIntoView({behavior:"smooth"})});
+const modal=document.getElementById("modalBack");document.getElementById("addGame").onclick=()=>modal.classList.add("open");document.getElementById("cancelModal").onclick=()=>modal.classList.remove("open");
+document.getElementById("gameForm").addEventListener("submit",e=>{e.preventDefault();const name=document.getElementById("gameName").value.trim(),url=safeUrl(document.getElementById("gameUrl").value.trim()),cat=document.getElementById("gameCat").value;if(!url){alert("Use um link válido começando com https:// ou http://");return}custom.push({id:"custom-"+Date.now(),name,url,cat,emoji:"🎮",colors:["#12476a","#187fbd"],desc:cat});localStorage.setItem("gamehub_custom",JSON.stringify(custom));modal.classList.remove("open");e.target.reset();activeCat="Todos";document.querySelectorAll(".filter[data-cat]").forEach(x=>x.classList.toggle("active",x.dataset.cat==="Todos"));render()});
+render();
+</script>
+</body>
+  </html>s",searchText="",showFavorites=false;
 const all=()=>[...defaults,...custom];
 function safeUrl(url){try{const u=new URL(url);return ["http:","https:"].includes(u.protocol)?u.href:""}catch(e){return ""}}
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
